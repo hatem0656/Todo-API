@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.get("/favicon.ico", (req, res) => res.status(204));
 //----------Routes---------//
-app.use("/todo-api-kappa.vercel.app/", todoRoutes);
+app.use("/api/todos", todoRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
