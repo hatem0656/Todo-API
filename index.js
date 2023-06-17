@@ -9,6 +9,7 @@ const app = express();
 
 //--------- Middleware---------//
 app.use(express.json());
+app.use(cors());
 
 app.get("/favicon.ico", (req, res) => res.status(204));
 //----------Routes---------//
