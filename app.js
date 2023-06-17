@@ -21,3 +21,5 @@ mongoose
     app.listen(process.env.PORT, () => console.log("Listening to port 4000"));
   })
   .catch((err) => console.log(err));
+
+module.exports = app;
