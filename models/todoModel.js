@@ -7,6 +7,10 @@ const todoSchema = new Schema(
       type: String,
       required: true,
     },
+    isFinished: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
