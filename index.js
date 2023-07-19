@@ -3,17 +3,34 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const authRoutes = require("./routes/auth");
+const cookieParser = require("cookie-parser");
 const todoRoutes = require("./routes/todos");
+const { requireAuth, checkUser } = require("./middlewares/authMiddleware");
 
 //------ Express app -----------//
 const app = express();
 
 //--------- Middleware---------//
 app.use(express.json());
-app.use(cors());
 
-app.get("/favicon.ico", (req, res) => res.status(204));
+app.use(cookieParser());
+app.use(
+  "*",
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
+//-------Authentication---------//
+// app.get("*", checkUser);
+
+// app.get("/home", requireAuth);
+
+app.get("/favicon.ico", (_, res) => res.status(204));
 //----------Routes---------//
+app.use(authRoutes);
 app.use("/api/todos", todoRoutes);
 
 mongoose
