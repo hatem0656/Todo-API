@@ -16,8 +16,8 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "https://todo-with-nuxt.vercel.app",
-    // origin: " http://localhost:3000",
+
+    origin: process.env.ORIGIN_URL,
   })
 );
 app.use(cookieParser());

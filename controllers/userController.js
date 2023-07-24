@@ -48,7 +48,12 @@ const post_signin = async (req, res) => {
 };
 
 const get_signout = (_req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    secure: true,
+    maxAge: 1,
+    sameSite: "none",
+  });
   res.status(200).json({ msg: "Logged Out" });
 };
 
