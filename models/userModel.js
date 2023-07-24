@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, "Please enter your name"],
+  },
+
   email: {
     type: String,
     required: [true, "Please enter an email"],
@@ -13,7 +19,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please enter a password"],
-    minlength: [6, "Minimum password length is 6 characters"],
   },
 });
 
@@ -37,6 +42,4 @@ userSchema.statics.login = async function (email, password) {
   throw Error("incorrect email");
 };
 
-const User = mongoose.model("user", userSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);

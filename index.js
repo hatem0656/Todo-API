@@ -3,10 +3,9 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 const cookieParser = require("cookie-parser");
 const todoRoutes = require("./routes/todos");
-const { requireAuth, checkUser } = require("./middlewares/authMiddleware");
 
 //------ Express app -----------//
 const app = express();
@@ -14,23 +13,20 @@ const app = express();
 //--------- Middleware---------//
 app.use(express.json());
 
-app.use(cookieParser());
 app.use(
-  "*",
   cors({
-    origin: true,
     credentials: true,
+    origin: "https://todo-with-nuxt.vercel.app",
+    // origin: " http://localhost:3000",
   })
 );
-
-//-------Authentication---------//
-// app.get("*", checkUser);
-
-// app.get("/home", requireAuth);
-
+app.use(cookieParser());
 app.get("/favicon.ico", (_, res) => res.status(204));
+
 //----------Routes---------//
-app.use(authRoutes);
+
+app.use(userRoutes);
+
 app.use("/api/todos", todoRoutes);
 
 mongoose
