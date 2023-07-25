@@ -1,3 +1,4 @@
+require("dotenv").config();
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
@@ -6,7 +7,7 @@ const { handleErrors } = require("../utils/errorHandler");
 // create json web token
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, "hatem0656 secret", {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: maxAge,
   });
 };
@@ -60,7 +61,7 @@ const get_signout = (_req, res) => {
 const get_user = async (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
-    jwt.verify(token, "hatem0656 secret", async (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
       if (err) {
         res.status(401).json({ message: "Not a Valid Token" });
         next();
